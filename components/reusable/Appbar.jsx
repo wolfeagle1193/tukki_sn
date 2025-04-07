@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     left: left,
     right: right,
     justifyContent: "center",
+    zIndex: 999
   }),
   box: (color) => ({
     backgroundColor: color,

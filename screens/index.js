@@ -19,9 +19,33 @@ import Success from "./bookings/Success";
 import Failed from "./bookings/Failed";
 import SelectRoom from "./details/SelectRoom";
 import Roomdetails from "./details/roomdetails";
-
-
+import ImageGrid from "../components/reusable/images_roms";
+import ReservationCard from "./details/reservationCard";
+import PaymentScreen from "./details/payments";
+import PaymentConfirmationScreen from "./details/ConfirmationHotelScrenn";
+import PaymentFailureScreen from "./details/payment_error";
+import EventDetails from "./details/eventsdetails";
+import BookEvent from "./details/eventBookingCard";
+import HebergementScreen from "./details/hebergements";
+import RoomBookingCard from "./details/freeRoomdetails";
+import ApartmentDetails from "./details/AppartmentsDetails"; 
+import ReserveApartment from "./details/BookApartment";
+import VillaDetails from "./details/VillaDetails";
+import PrivateRoomDetails from "./details/PrivateRoomDetails";
 export {
+  PrivateRoomDetails,
+  VillaDetails,
+  ReserveApartment,
+  ApartmentDetails,
+  RoomBookingCard,
+  HebergementScreen,
+  BookEvent,
+  EventDetails,
+  PaymentFailureScreen,
+  PaymentConfirmationScreen,
+  PaymentScreen,
+  ReservationCard,
+  ImageGrid,
   Roomdetails,
   SelectRoom,
   Failed,

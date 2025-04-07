@@ -7,8 +7,32 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { BottomTabs } from "./components"; // Vérifiez cette importation
 /*import BottomTabs from "./components/navigation/ButtomTabNavigation"; // Vérifiez également ici*/
-import { OnBoarding,Roomdetails, Search, Mainplacesdetails, Hotelsdetails,EventsfullList,HotelsfullList, Regiondetails,HotelSearch, Payments, Settings, SelectRoom } from "./screens";
-
+import {
+  PrivateRoomDetails,
+  VillaDetails,
+  ApartmentDetails,
+  RoomBookingCard,
+  EventDetails,
+  PaymentFailureScreen,
+  PaymentConfirmationScreen,
+  PaymentScreen,
+  OnBoarding,
+  Roomdetails,
+  Search,
+  Mainplacesdetails,
+  Hotelsdetails,
+  EventsfullList,
+  HotelsfullList,
+  Regiondetails,
+  HotelSearch,
+  Payments,
+  Settings,
+  SelectRoom,
+  ReservationCard,
+  BookEvent,
+  HebergementScreen,
+  ReserveApartment
+} from "./screens";
 
 const Stack = createNativeStackNavigator();
 
@@ -61,16 +85,46 @@ export default function App() {
           options={{ headerShown: false }}
         />
          <Stack.Screen
+          name="RoomBookingPrivate"
+          component={PrivateRoomDetails}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="Hebergement"
+          component={ HebergementScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="BookApartment"
+          component={ ReserveApartment}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="SearchHotel"
           component={HotelSearch}
           options={{ headerShown: false }}
         />
+          <Stack.Screen
+          name="ApartmentDetails"
+          component={ApartmentDetails}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
+          name="RoomBooking"
+          component={RoomBookingCard}
+          options={{ headerShown: false }}
+        />
+          <Stack.Screen
+          name="VillaDetails"
+          component={VillaDetails}
+          options={{ headerShown: false }}
+        />
+          <Stack.Screen
           name="MainplacesDetails"
           component={Mainplacesdetails}
           options={{ headerShown: false }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="HotelsDetails"
           component={Hotelsdetails}
           options={{ headerShown: false }}
@@ -80,43 +134,71 @@ export default function App() {
           component={EventsfullList}
           options={{ headerShown: false }}
         />
-         <Stack.Screen
+        <Stack.Screen
+          name="EventDetails"
+          component={EventDetails}
+          options={{ headerShown: false }}
+        />
+          <Stack.Screen
+          name="BookEvent"
+          component={BookEvent}
+          options={{ headerShown: false }}
+        />
+        
+        <Stack.Screen
           name="Hotelslist"
           component={HotelsfullList}
           options={{ headerShown: false }}
         />
-          <Stack.Screen
-          name="Hotelsdetails"
-          component={Hotelsdetails}
-          options={{ headerShown: false }}
-        />
+        
+      
         <Stack.Screen
           name="Regiondetails"
           component={Regiondetails}
           options={{ headerShown: false }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="SelectRoom"
           component={SelectRoom}
           options={{ headerShown: false }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="Roomdetails"
           component={Roomdetails}
           options={{ headerShown: false }}
         />
-         <Stack.Screen
+        <Stack.Screen
+          name="ReservationCard"
+          component={ReservationCard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Paiements"
+          component={PaymentScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ConfirmationHotels"
+          component={PaymentConfirmationScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FailureHotel"
+          component={PaymentFailureScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
           name="Payments"
           component={Payments}
           options={{ headerShown: false }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="Settings"
           component={Settings}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
-      
     </NavigationContainer>
   );
 }

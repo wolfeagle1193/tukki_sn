@@ -14,7 +14,11 @@ const COLORS = {
     lightgray:"#696969",
     red:"#B22222",
     lightwhite:"#FFFFF0",
-    lightgreen:"#FBFEF8"
+    lightgreen:"#FBFEF8",
+    verylightgray:"#D3D3D3",
+    darkgray: "#A9A9A9" ,
+    transparent: "#00000000"                           
+    
 };
 
 const SIZES = {
