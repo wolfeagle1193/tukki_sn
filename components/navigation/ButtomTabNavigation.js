@@ -9,7 +9,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import {BookingScreen,ProfileScreen,SavedScreen,PlacesScreen, Success,Failed} from "../../screens";
 import { withSafeAreaInsets } from "react-native-safe-area-context";
 import Toptap from "./Toptap";
-import AuthTopTab from "./AuthTopTab";
+import AuthNavigation from "./AuthNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -58,7 +58,7 @@ const BottomTabs = () => {
 
       <Tab.Screen
         name="Favoris"
-        component={AuthTopTab}
+        component={AuthNavigation}
         options={{
           tabBarLabel: () => null,
           headerShown: false,

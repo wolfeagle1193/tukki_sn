@@ -3,9 +3,9 @@ import { StyleSheet } from "react-native";
 const styles =StyleSheet.create({
     box:{
         backgroundColor : COLORS.white,
-        width:40,
-        height:40,
-        borderRadius:12,
+        width:32,
+        height:32,
+        borderRadius:8,
         alignItems:"center",
         justifyContent:"center",
         

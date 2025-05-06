@@ -2,7 +2,7 @@ import ReusableText from "./reusable/ReusableText";
 import ReusableBtn from "./Button/ReusableBtn";
 import HeightSpacer from "./reusable/HeightSpacer";
 import WidthSpacer from "./reusable/WidthSpacer";
-import "@ethersproject/shims";
+//import "@ethersproject/shims";
 import "@expo/metro-runtime";
 import "react-native-get-random-values";
 import "../globals";
@@ -31,8 +31,10 @@ import CategoryGrid from "./reusable/CategoryGrid.jsx";
 import AvailabilityIcon from "./reusable/Favoris.jsx";
 import Container from "./reusable/ReusableContainer.jsx";
 import FavoritesIcon from "./reusable/FavouriteIcon.jsx";
+import AuthNavigation from "./navigation/AuthNavigation.jsx";
 
 export {
+  AuthNavigation,
   Container,
   AvailabilityIcon,
   FavoritesIcon,

@@ -1,42 +1,3 @@
-/*import { StyleSheet, View, TouchableOpacity } from "react-native";
-import { COLORS, TEXT } from "../constants/Theme.js";
-import NetworkingImage from "../reusable/NetworkingImage.jsx";
-import ReusableText from "../reusable/ReusableText.jsx";
-import HeightSpacer from "../reusable/HeightSpacer.jsx";
-import { useNavigation } from "@react-navigation/native";
-
-const Main_places = ({ item }) => {
-  const navigation = useNavigation();
-  return (
-    <TouchableOpacity onPress={()=>navigation.navigate("MainplacesDetails",item)}>
-      <View style={styles.container}>
-        <NetworkingImage
-          source={item.placeImage}
-          width={118}
-          height={160}
-          radius={25}
-        />
-        <HeightSpacer height={5} />
-        <ReusableText
-          text={item.name} // Utilisez le nom de l'élément ici
-          family={"medium"}
-          size={TEXT.xsmall}
-          color={COLORS.black}
-          align={"center"}
-        />
-        <HeightSpacer height={3}/>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-  },
-});
-
-export default Main_places;*/
 
 import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import { COLORS, TEXT } from "../constants/Theme.js";
@@ -46,15 +7,17 @@ import { useNavigation } from "@react-navigation/native";
 
 const Main_places = ({ item }) => {
   const navigation = useNavigation();
+  
   return (
     <TouchableOpacity onPress={() => navigation.navigate("MainplacesDetails", {item})}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          {/* Image sans opacité pour une meilleure netteté */}
+          {/* Image component avec gestion des erreurs */}
           <Image
             source={item.placeImage}
             style={styles.image}
             resizeMode="cover"
+            onError={(e) => console.error("Image loading error:", e.nativeEvent.error)}
           />
           {/* Overlay semi-transparent pour le contraste */}
           <View style={styles.overlay} />
@@ -80,7 +43,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: 100,
-    height: 130,
+    height: 125,
     borderRadius: 18,
     overflow: 'hidden',
     position: 'relative',

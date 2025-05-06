@@ -1,6 +1,6 @@
 import SearchScreen from "../screens/search/SearchScreen";
 import Mainplacesdetails from "./details/mainplacesdetails";
-import OnBoarding from "./onBoarding/OnBoarding";
+import OnBoard from "./onBoarding/OnBoard";
 import SavedScreen from "./SavedScreen";
 import ProfileScreen from "./ProfileScreen";
 import BookingScreen from "./BookingScreen";
@@ -32,7 +32,10 @@ import ApartmentDetails from "./details/AppartmentsDetails";
 import ReserveApartment from "./details/BookApartment";
 import VillaDetails from "./details/VillaDetails";
 import PrivateRoomDetails from "./details/PrivateRoomDetails";
+
+
 export {
+ 
   PrivateRoomDetails,
   VillaDetails,
   ReserveApartment,
@@ -58,7 +61,7 @@ export {
   Mainplacesdetails,
   SearchScreen,
   Search,
-  OnBoarding,
+  OnBoard,
   SavedScreen,
   ProfileScreen,
   BookingScreen,

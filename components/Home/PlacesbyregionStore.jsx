@@ -1,38 +1,62 @@
-import React from "react";
-import {  View, VirtualizedList} from "react-native";
+
+import React, { useEffect, useState } from "react";
+import { View, VirtualizedList, ActivityIndicator } from "react-native";
 import HeightSpacer from "../reusable/HeightSpacer";
 import { SIZES } from "../constants/Theme";
 import PlacesbyRegion from "../Tiles/PlacesbyRegion";
-
-// Importez les images
-const dakar = require("../../assets/images/region/dakar.jpg");
-const saintLouis = require("../../assets/images/region/saintlouis.jpg");
-const lapetiteCote = require("../../assets/images/region/petitecote.jpg");
-const casamence = require("../../assets/images/region/casamance.jpg");
-const sineSaloum = require("../../assets/images/region/sinesaloum.jpg");
-const senegalOriental = require("../../assets/images/region/senegal_oriental.jpg");
+import axios from "axios";
 
 const PlacesbyregionStore = () => {
-  const placesRegionList = [
-    { _id: "2000", name: "Dakar", placeImage: dakar},
-    { _id: "2001", name: " Saint-Louis", placeImage: saintLouis },
-    { _id: "2002", name: "La Petite Cote", placeImage: lapetiteCote },
-    { _id: "2003", name: "Casamence", placeImage: casamence },
-    { _id: "2004", name: "Sine Saloum", placeImage: sineSaloum },
-    { _id: "2005", name: "Senegal Oriental", placeImage: senegalOriental},
-  ];
+  const [RegionData, setRegionData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  // URL de base du serveur backend
+  const BASE_URL = 'http://192.168.1.2:5002';
+
+  useEffect(() => {
+    const fetchRegionData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/regions/getRegion`);
+        
+        if (response.data.success && Array.isArray(response.data.regions)) {
+          const modifiedData = response.data.regions.map(item => ({
+            ...item,
+            
+            placeImage: { uri: `${BASE_URL}${item.placeImage}` },
+          }));
+          setRegionData(modifiedData);
+        } else {
+          console.error("Unexpected response format:", response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRegionData();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <View>
-      <HeightSpacer height={10} />
+      <HeightSpacer height={8} />
       <VirtualizedList
-        data={placesRegionList}
+        data={RegionData}
         horizontal
         keyExtractor={(item) => item._id}
         showsHorizontalScrollIndicator={false}
         getItemCount={(data) => data.length}
         getItem={(data, index) => data[index]}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <View style={{ marginRight: SIZES.small }}>
             <PlacesbyRegion item={item} />
           </View>

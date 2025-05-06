@@ -98,12 +98,12 @@ import Reusabletile from "../reusable/Reusabletile.jsx";
     return (
       <View >
         <View
-          style={[Reusable.rowWithSpace("space-between"), { paddingBottom: 10 }]}
+          style={[Reusable.rowWithSpace("space-between"), { paddingBottom: 8 }]}
         >
           <ReusableText
-            text={"Evènements,Circuits et Excursions"}
+            text={"Évasions "}
             family={"medium"}
-            size={TEXT.medium}
+            size={TEXT.small}
             color={COLORS.black}
           />
           <TouchableOpacity onPress={() => navigation.navigate("Eventslist")}>

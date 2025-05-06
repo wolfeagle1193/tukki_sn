@@ -63,12 +63,12 @@ const BestHotels = () => {
   return (
     <View>
       <View
-        style={[Reusable.rowWithSpace("space-between"), { paddingBottom: 10 }]}
+        style={[Reusable.rowWithSpace("space-between"), { paddingBottom: 8 }]}
       >
         <ReusableText
-          text={"Hôtels à proximité"}
+          text={" Meilleurs Hôtels"}
           family={"medium"}
-          size={TEXT.medium}
+          size={TEXT.small}
           color={COLORS.black}
         />
         <TouchableOpacity onPress={() => navigation.navigate("Hotelslist")}>

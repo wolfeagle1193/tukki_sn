@@ -21,7 +21,7 @@ const HomeScreen = ({ navigation }) => {
           <ReusableText
             text={"Salut !"}
             family={"regular"}
-            size={TEXT.large}
+            size={TEXT.medium}
             color={COLORS.black}
           />
           <TouchableOpacity
@@ -30,32 +30,32 @@ const HomeScreen = ({ navigation }) => {
           >
             <AntDesign // Assurez-vous que le nom du composant est correct
               name="search1"
-              size={TEXT.large}
+              size={TEXT.medium}
               color={COLORS.white}
             />
           </TouchableOpacity>
         </View>
 
-        <HeightSpacer height={SIZES.xlarge} />
+        <HeightSpacer height={SIZES.medium} />
         <ReusableText
-          text={"Trésors du Sénégal"}
+          text={"Merveilles du Sénégal"}
           family={"medium"}
-          size={TEXT.medium}
+          size={TEXT.small}
           color={COLORS.black}
         />
         <Mainplaces_store />
 
-        <HeightSpacer height={SIZES.medium} />
+        <HeightSpacer height={SIZES.small} />
         <ReusableText
-          text={"Parcourir Par Region"}
+          text={"Destinations par Région"}
           family={"medium"}
-          size={TEXT.medium}
+          size={TEXT.small}
           color={COLORS.black}
         />
         <PlacesbyregionStore />
-        <HeightSpacer height={SIZES.medium} />
+        <HeightSpacer height={SIZES.small} />
         <Eventsdata/>
-        <HeightSpacer height={SIZES.medium} />
+        <HeightSpacer height={SIZES.small} />
         <BestHotels/>
        
       </View>
