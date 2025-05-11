@@ -98,7 +98,7 @@ import Reusabletile from "../reusable/Reusabletile.jsx";
     return (
       <View >
         <View
-          style={[Reusable.rowWithSpace("space-between"), { paddingBottom: 8 }]}
+          style={[Reusable.rowWithSpace("space-between"), { paddingBottom: 6 }]}
         >
           <ReusableText
             text={"Évasions "}

@@ -1,36 +1,42 @@
 
 import React, { useEffect, useState } from "react";
-import { View, VirtualizedList, ActivityIndicator } from "react-native";
+import { View, VirtualizedList, ActivityIndicator, Text } from "react-native";
 import HeightSpacer from "../reusable/HeightSpacer";
 import Main_places from "../Tiles/Main_places";
-import axios from "axios";
+import { api } from "../../services/api";
+import { API_CONFIG } from "../../config";
 
-const Mainplaces_store = () => {
+const Mainplaces_store = ({ onDataLoaded }) => {
   const [mainPlacesData, setMainPlacesData] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-  // URL de base du serveur backend
-  const BASE_URL = 'http://192.168.1.2:5002';
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMainPlaces = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/api/treasures/getTreasure`);
+        const response = await api.getTreasures();
         
         if (response.data.success && Array.isArray(response.data.treasures)) {
           const modifiedData = response.data.treasures.map(item => ({
             ...item,
-            // Construire correctement l'URL de l'image
-            placeImage: { uri: `${BASE_URL}${item.placeImage}` },
+            // Construire correctement l'URL de l'image en utilisant la BASE_URL du config
+            placeImage: { 
+              uri: `${API_CONFIG.BASE_URL.split('/api')[0]}${item.placeImage}` 
+            },
           }));
           setMainPlacesData(modifiedData);
+          setError(null);
         } else {
-          console.error("Unexpected response format:", response.data);
+          console.error("Format de réponse inattendu:", response.data);
+          setError("Impossible de récupérer les données");
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Erreur lors de la récupération des données:", error);
+        setError("Erreur lors du chargement des données");
       } finally {
         setLoading(false);
+        // Notifier le parent que le chargement est terminé
+        if (onDataLoaded) onDataLoaded();
       }
     };
 
@@ -40,14 +46,31 @@ const Mainplaces_store = () => {
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#6D9F3D" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={{ padding: 10 }}>
+        <Text style={{ color: 'red' }}>{error}</Text>
+      </View>
+    );
+  }
+
+  // Afficher un message si aucune donnée n'est disponible
+  if (mainPlacesData.length === 0) {
+    return (
+      <View style={{ padding: 10 }}>
+        <Text>Aucune donnée disponible.</Text>
       </View>
     );
   }
 
   return (
     <View>
-      <HeightSpacer height={8} />
+      <HeightSpacer height={6} />
       <VirtualizedList
         data={mainPlacesData}
         horizontal

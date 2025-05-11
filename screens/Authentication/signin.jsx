@@ -1,5 +1,5 @@
 
-import { View, Text, TextInput, TouchableOpacity, Alert, Image } from "react-native";
+/*import { View, Text, TextInput, TouchableOpacity, Alert, Image } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./signin.style";
 import * as Yup from "yup";
@@ -51,7 +51,7 @@ const Signin = ({ navigation }) => {
       // Simulation d'un délai pour mieux voir l'animation
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      const response = await axios.post('http://192.168.1.2:5002/api/login', {
+      const response = await axios.post('http://192.168.1.6:5002/api/login', {
         email: values.email,
         password: values.password
       });
@@ -110,7 +110,7 @@ const Signin = ({ navigation }) => {
         </View>
       )}
       
-      {/* Formulaire d'identification classique */}
+      {/* Formulaire d'identification classique 
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={validationSchema}
@@ -211,6 +211,501 @@ const Signin = ({ navigation }) => {
               borderWidth={0}
               textColor={COLORS.white}
               disabled={loader}
+            />
+            
+            <View style={styles.navigationLinksContainer}>
+              <TouchableOpacity onPress={navigateToForgotPassword}>
+                <Text style={styles.forgotPasswordText}>
+                  Mot de passe oublié ?
+                </Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity onPress={navigateToRegister}>
+                <Text style={styles.registerText}>
+                  S'inscrire
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+      </Formik>
+      
+      {/* Séparateur "ou" avec les deux barres horizontales 
+      <View style={styles.dividerContainer}>
+        <View style={styles.divider} />
+        <Text style={styles.dividerText}>ou</Text>
+        <View style={styles.divider} />
+      </View>
+      
+      {/* Boutons OAuth 
+      <View style={styles.oauthContainer}>
+        <View style={styles.socialButtonsContainer}>
+          <TouchableOpacity 
+            style={styles.socialButton} 
+            onPress={handleGoogleSignIn}
+          >
+            <Image 
+              source={require("../../assets/images/google.png")} 
+              style={styles.socialIcon} 
+              resizeMode="contain"
+            />
+            <Text style={styles.socialButtonText}>Google</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.socialButton} 
+            onPress={handleFacebookSignIn}
+          >
+            <Image 
+              source={require("../../assets/images/facebook.png")} 
+              style={styles.socialIcon} 
+              resizeMode="contain"
+            />
+            <Text style={styles.socialButtonText}>Facebook</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default Signin;*/
+
+
+/*import { View, Text, TextInput, TouchableOpacity, Alert, Image } from "react-native";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import styles from "./signin.style";
+import * as Yup from "yup";
+import { Formik } from "formik";
+import { COLORS, SIZES } from "../../components/constants/Theme";
+import { HeightSpacer, ReusableBtn, WidthSpacer } from "../../components";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AuthContext } from "../../context"; // Importation du contexte d'authentification
+
+const validationSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(8, "Au moins 8 caractères svp")
+    .required("Obligatoire"),
+  email: Yup.string()
+    .email("Veuillez insérer un email valide")
+    .required("Obligatoire"),
+});
+
+const Signin = ({ navigation }) => {
+  const [obscureText, setObscureText] = useState(true);
+  const [loadingText, setLoadingText] = useState("Connexion en cours");
+  
+  // Utilisation du contexte d'authentification
+  const { login, isLoading, error: authError } = useContext(AuthContext);
+  
+  // Animation des points pour le texte de chargement
+  useEffect(() => {
+    let dotsInterval;
+    if (isLoading) {
+      const dots = [' ','.', '..', '...'];
+      let i = 0;
+      
+      dotsInterval = setInterval(() => {
+        setLoadingText(`Connexion en cours ${dots[i]}`);
+        i = (i + 1) % dots.length;
+      }, 500);
+    }
+    
+    return () => {
+      if (dotsInterval) clearInterval(dotsInterval);
+    };
+  }, [isLoading]);
+
+  const loginUser = async (values) => {
+    // Utiliser la fonction login du contexte d'authentification
+    const result = await login(values.email, values.password);
+    
+    if (result.success) {
+      // Redirection vers l'écran principal après connexion réussie
+      navigation.navigate("Bottom");
+    }
+  };
+
+  const handleGoogleSignIn = () => {
+    Alert.alert("OAuth", "Connexion avec Google initiée");
+    // Après authentification Google réussie, rediriger vers Onboarding
+    // Pour simuler, décommentez la ligne suivante:
+    // navigation.navigate("Onboarding");
+  };
+
+  const handleFacebookSignIn = () => {
+    Alert.alert("OAuth", "Connexion avec Facebook initiée");
+    // Après authentification Facebook réussie, rediriger vers Onboarding
+    // Pour simuler, décommentez la ligne suivante:
+    // navigation.navigate("Onboarding");
+  };
+
+  const navigateToForgotPassword = () => {
+    navigation.navigate("ForgotPassword");
+  };
+
+  const navigateToRegister = () => {
+    navigation.navigate("Register");
+  };
+
+  return (
+    <View style={styles.container}>
+      {authError && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{authError}</Text>
+        </View>
+      )}
+      
+      {/* Formulaire d'identification classique 
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        validationSchema={validationSchema}
+        onSubmit={(values) => loginUser(values)}
+      >
+        {({
+          handleChange,
+          touched,
+          handleSubmit,
+          values,
+          errors,
+          isValid,
+          setFieldTouched,
+        }) => (
+          <View style={styles.formContainer}>
+            <View style={styles.wrapper}>
+            <Text style={styles.oauthTitle}>Se connecter via </Text>
+              <Text style={styles.label}>Email</Text>
+              <View>
+                <View
+                  style={styles.inputWrapper(
+                    touched.email ? COLORS.green_accueil : COLORS.lightgray
+                  )}
+                >
+                  <MaterialCommunityIcons
+                    name="email-outline"
+                    size={20}
+                    color={COLORS.black}
+                  />
+                  <WidthSpacer width={10} />
+                  <TextInput
+                    onChangeText={handleChange("email")}
+                    placeholder="Entrer votre email"
+                    onFocus={() => setFieldTouched("email")}
+                    onBlur={() => setFieldTouched("email", "")}
+                    value={values.email}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    style={{ flex: 1 }}
+                    keyboardType="email-address"
+                    placeholderTextColor={COLORS.lightgray}
+                  />
+                </View>
+                {touched.email && errors.email && (
+                  <Text style={styles.errorMessage}>{errors.email}</Text>
+                )}
+              </View>
+            </View>
+            <View style={styles.wrapper}>
+              <Text style={styles.label}>Mot de Passe</Text>
+              <View>
+                <View
+                  style={styles.inputWrapper(
+                    touched.password ? COLORS.green_accueil : COLORS.lightgray
+                  )}
+                >
+                  <MaterialCommunityIcons
+                    name="lock-outline"
+                    size={20}
+                    color={COLORS.black}
+                  />
+                  <WidthSpacer width={10} />
+                  <TextInput
+                    secureTextEntry={obscureText}
+                    placeholder="Entrer votre mot de passe"
+                    onFocus={() => setFieldTouched("password")}
+                    onBlur={() => setFieldTouched("password", "")}
+                    value={values.password}
+                    onChangeText={handleChange("password")}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    style={{ flex: 1 }}
+                    placeholderTextColor={COLORS.lightgray}
+                  />
+                  <TouchableOpacity
+                    onPress={() => {
+                      setObscureText(!obscureText);
+                    }}
+                  >
+                    <MaterialCommunityIcons
+                      name={!obscureText ? "eye-outline" : "eye-off-outline"}
+                      size={18}
+                    />
+                  </TouchableOpacity>
+                </View>
+                {touched.password && errors.password && (
+                  <Text style={styles.errorMessage}>{errors.password}</Text>
+                )}
+              </View>
+            </View>
+            <HeightSpacer height={20}/>
+            <ReusableBtn
+              onPress={handleSubmit}
+              btnText={isLoading ? loadingText : "Se Connecter"}
+              width={SIZES.width - 40}
+              backgroundColor={COLORS.green_button_back}
+              borderColor={COLORS.green_button_back}
+              borderWidth={0}
+              textColor={COLORS.white}
+              disabled={isLoading}
+            />
+            
+            <View style={styles.navigationLinksContainer}>
+              <TouchableOpacity onPress={navigateToForgotPassword}>
+                <Text style={styles.forgotPasswordText}>
+                  Mot de passe oublié ?
+                </Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity onPress={navigateToRegister}>
+                <Text style={styles.registerText}>
+                  S'inscrire
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+      </Formik>
+      
+      {/* Séparateur "ou" avec les deux barres horizontales 
+      <View style={styles.dividerContainer}>
+        <View style={styles.divider} />
+        <Text style={styles.dividerText}>ou</Text>
+        <View style={styles.divider} />
+      </View>
+      
+      {/* Boutons OAuth 
+      <View style={styles.oauthContainer}>
+        <View style={styles.socialButtonsContainer}>
+          <TouchableOpacity 
+            style={styles.socialButton} 
+            onPress={handleGoogleSignIn}
+          >
+            <Image 
+              source={require("../../assets/images/google.png")} 
+              style={styles.socialIcon} 
+              resizeMode="contain"
+            />
+            <Text style={styles.socialButtonText}>Google</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.socialButton} 
+            onPress={handleFacebookSignIn}
+          >
+            <Image 
+              source={require("../../assets/images/facebook.png")} 
+              style={styles.socialIcon} 
+              resizeMode="contain"
+            />
+            <Text style={styles.socialButtonText}>Facebook</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default Signin;*/
+
+
+
+import { View, Text, TextInput, TouchableOpacity, Alert, Image } from "react-native";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import styles from "./signin.style";
+import * as Yup from "yup";
+import { Formik } from "formik";
+import { COLORS, SIZES } from "../../components/constants/Theme";
+import { HeightSpacer, ReusableBtn, WidthSpacer } from "../../components";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AuthContext } from "../../context"; // Importation du contexte d'authentification
+
+const validationSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(8, "Au moins 8 caractères svp")
+    .required("Obligatoire"),
+  email: Yup.string()
+    .email("Veuillez insérer un email valide")
+    .required("Obligatoire"),
+});
+
+const Signin = ({ navigation }) => {
+  const [obscureText, setObscureText] = useState(true);
+  const [loadingText, setLoadingText] = useState("Connexion en cours");
+  
+  // Utilisation du contexte d'authentification
+  const { login, isLoading, error: authError } = useContext(AuthContext);
+  
+  // Animation des points pour le texte de chargement
+  useEffect(() => {
+    let dotsInterval;
+    if (isLoading) {
+      const dots = [' ','.', '..', '...'];
+      let i = 0;
+      
+      dotsInterval = setInterval(() => {
+        setLoadingText(`Connexion en cours ${dots[i]}`);
+        i = (i + 1) % dots.length;
+      }, 500);
+    }
+    
+    return () => {
+      if (dotsInterval) clearInterval(dotsInterval);
+    };
+  }, [isLoading]);
+
+  // Fonction de connexion utilisant le contexte d'authentification
+  const loginUser = async (values) => {
+    // Utilisation de la fonction login du contexte d'authentification
+    const result = await login(values.email, values.password);
+    
+    if (result && result.success) {
+      // Redirection vers l'écran principal si la connexion est réussie
+      navigation.navigate("Bottom");
+    }
+  };
+
+  const handleGoogleSignIn = () => {
+    Alert.alert("OAuth", "Connexion avec Google initiée");
+    // Après authentification Google réussie, rediriger vers l'écran principal
+    // Pour simuler, décommentez la ligne suivante:
+    // navigation.navigate("Bottom");
+  };
+
+  const handleFacebookSignIn = () => {
+    Alert.alert("OAuth", "Connexion avec Facebook initiée");
+    // Après authentification Facebook réussie, rediriger vers l'écran principal
+    // Pour simuler, décommentez la ligne suivante:
+    // navigation.navigate("Bottom");
+  };
+
+  const navigateToForgotPassword = () => {
+    navigation.navigate("ForgotPassword");
+  };
+
+  const navigateToRegister = () => {
+    navigation.navigate("Register");
+  };
+
+  return (
+    <View style={styles.container}>
+      {/* Affichage des erreurs d'authentification */}
+      {authError && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{authError}</Text>
+        </View>
+      )}
+      
+      {/* Formulaire d'identification classique */}
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        validationSchema={validationSchema}
+        onSubmit={(values) => loginUser(values)}
+      >
+        {({
+          handleChange,
+          touched,
+          handleSubmit,
+          values,
+          errors,
+          isValid,
+          setFieldTouched,
+        }) => (
+          <View style={styles.formContainer}>
+            <View style={styles.wrapper}>
+            <Text style={styles.oauthTitle}>Se connecter via </Text>
+              <Text style={styles.label}>Email</Text>
+              <View>
+                <View
+                  style={styles.inputWrapper(
+                    touched.email ? COLORS.green_accueil : COLORS.lightgray
+                  )}
+                >
+                  <MaterialCommunityIcons
+                    name="email-outline"
+                    size={20}
+                    color={COLORS.black}
+                  />
+                  <WidthSpacer width={10} />
+                  <TextInput
+                    onChangeText={handleChange("email")}
+                    placeholder="Entrer votre email"
+                    onFocus={() => setFieldTouched("email")}
+                    onBlur={() => setFieldTouched("email", "")}
+                    value={values.email}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    style={{ flex: 1 }}
+                    keyboardType="email-address"
+                    placeholderTextColor={COLORS.lightgray}
+                  />
+                </View>
+                {touched.email && errors.email && (
+                  <Text style={styles.errorMessage}>{errors.email}</Text>
+                )}
+              </View>
+            </View>
+            <View style={styles.wrapper}>
+              <Text style={styles.label}>Mot de Passe</Text>
+              <View>
+                <View
+                  style={styles.inputWrapper(
+                    touched.password ? COLORS.green_accueil : COLORS.lightgray
+                  )}
+                >
+                  <MaterialCommunityIcons
+                    name="lock-outline"
+                    size={20}
+                    color={COLORS.black}
+                  />
+                  <WidthSpacer width={10} />
+                  <TextInput
+                    secureTextEntry={obscureText}
+                    placeholder="Entrer votre mot de passe"
+                    onFocus={() => setFieldTouched("password")}
+                    onBlur={() => setFieldTouched("password", "")}
+                    value={values.password}
+                    onChangeText={handleChange("password")}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    style={{ flex: 1 }}
+                    placeholderTextColor={COLORS.lightgray}
+                  />
+                  <TouchableOpacity
+                    onPress={() => {
+                      setObscureText(!obscureText);
+                    }}
+                  >
+                    <MaterialCommunityIcons
+                      name={!obscureText ? "eye-outline" : "eye-off-outline"}
+                      size={18}
+                    />
+                  </TouchableOpacity>
+                </View>
+                {touched.password && errors.password && (
+                  <Text style={styles.errorMessage}>{errors.password}</Text>
+                )}
+              </View>
+            </View>
+            <HeightSpacer height={20}/>
+            <ReusableBtn
+              onPress={handleSubmit}
+              btnText={isLoading ? loadingText : "Se Connecter"}
+              width={SIZES.width - 40}
+              backgroundColor={COLORS.green_button_back}
+              borderColor={COLORS.green_button_back}
+              borderWidth={0}
+              textColor={COLORS.white}
+              disabled={isLoading}
             />
             
             <View style={styles.navigationLinksContainer}>

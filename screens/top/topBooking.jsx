@@ -60,7 +60,7 @@ const TopBooking = ({ navigation }) => {
               />
               <ReusableBtn
                 onPress={() => navigation.navigate("Bottom")}
-                btnText={"Supprimer"}
+                btnText={"Annuler"}
                 width={(SIZES.width - 50) / 2.8}
                 backgroundColor={COLORS.pink}
                 borderColor={COLORS.green_button_back}

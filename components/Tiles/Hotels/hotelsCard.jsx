@@ -40,7 +40,7 @@ const HotelsCard = ({ item, margin, onPress }) => {
           <View style={Reusable.rowWithSpace("flex-start")}>
             <Rating rating={item.rating} />
             <ReusableText
-              text={` (${item.review}) `}
+              text={` (${item.review} Avis) `}
               family={"medium"}
               size={SIZES.small}
               color={COLORS.black}

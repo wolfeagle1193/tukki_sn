@@ -24,9 +24,9 @@ const BottomTabs = () => {
           width: "100%",
           backgroundColor: "#E5E5E5", // Couleur de fond
           paddingBottom: 10, 
-          /* borderBottomLeftRadius: 10, // Arrondi coin inférieur gauche
-        borderBottomRightRadius: 10,*/ // Arrondi coin inférieur droit
-          position: "absolute", // Assurez-vous que la barre d'onglets est positionnée correctement
+           borderBottomLeftRadius: 10, // Arrondi coin inférieur gauche
+        borderBottomRightRadius: 10,
+          position: "absolute", 
           left: 0,
           right: 0,
           bottom: 0,
@@ -56,9 +56,34 @@ const BottomTabs = () => {
         }}
       />
 
-      <Tab.Screen
+     { /*<Tab.Screen
         name="Favoris"
         component={AuthNavigation}
+        options={{
+          tabBarLabel: () => null,
+          headerShown: false,
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <View style={styles.focusedButtonFavoris}>
+                <Entypo name="heart-outlined" size={30} color="white" />
+                <Text style={styles.focusedLabel}>Favoris</Text>
+              </View>
+            ) : (
+              <Entypo name="heart-outlined" size={30} color="#4B7F2C" />
+            ),
+        }}
+      />*/}
+        <Tab.Screen
+        name="Favoris"
+        // Remplacement du composant AuthNavigation par un composant simple
+        component={() => (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
+            <Text style={{ fontSize: 18, color: '#4B7F2C' }}>Écran Favoris Temporaire</Text>
+            <Text style={{ fontSize: 14, color: '#666', marginTop: 10, textAlign: 'center', paddingHorizontal: 20 }}>
+              Cet écran est temporaire pour résoudre le problème d'importation circulaire.
+            </Text>
+          </View>
+        )}
         options={{
           tabBarLabel: () => null,
           headerShown: false,
@@ -166,3 +191,6 @@ const styles = StyleSheet.create({
     height: 53,
   },
 });
+
+
+

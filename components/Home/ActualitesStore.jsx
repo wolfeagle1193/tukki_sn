@@ -22,7 +22,7 @@ const ActualitesStore = () => {
 
   return (
     <View>
-      <HeightSpacer height={10} />
+      <HeightSpacer height={6} />
       <VirtualizedList
         data={Actualites_data}
         horizontal

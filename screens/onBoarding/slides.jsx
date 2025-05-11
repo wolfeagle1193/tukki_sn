@@ -1538,8 +1538,16 @@ export default Slides*/
 
 
 
-import { View, Image, Animated, Dimensions, Easing } from 'react-native';
+/*import { View, Image, Animated, Dimensions, Easing } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
+import styles from './slides.styles';
+import { ReusableText, ReusableBtn, HeightSpacer } from "../../components";
+import { COLORS, SIZES } from '../../components/constants/Theme';
+import { useNavigation } from '@react-navigation/native';*/
+
+
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Image, Dimensions, Animated, Easing } from 'react-native';
 import styles from './slides.styles';
 import { ReusableText, ReusableBtn, HeightSpacer } from "../../components";
 import { COLORS, SIZES } from '../../components/constants/Theme';
@@ -1881,7 +1889,7 @@ const Slides = ({ slides, currentIndex }) => {
       ))}
 
       {/* Content overlay */}
-      <View style={[styles.stack, { zIndex: slides.length + 1 }]}>
+     {/* <View style={[styles.stack, { zIndex: slides.length + 1 }]}>
         <ReusableText 
           text={slides[currentIndex].title} 
           family={'large'}
@@ -1898,7 +1906,35 @@ const Slides = ({ slides, currentIndex }) => {
           borderWidth={0}
           textColor={COLORS.white}
         />
-      </View>
+      </View>*/}
+      {/* Content overlay */}
+<View style={[styles.stack, { zIndex: slides.length + 10 }]}>
+  <ReusableText 
+    text={slides[currentIndex].title} 
+    family={'large'}
+    size={SIZES.large}
+    color={COLORS.white}
+  />
+  <HeightSpacer height={40} />
+  <View style={{ zIndex: slides.length + 20 }}>
+    <ReusableBtn 
+      onPress={() => {
+        console.log("Bouton Démarrer pressé"); // Ajout d'un log de débogage
+        navigation.navigate('Auth');
+      }}
+      btnText={"Démarrer"}
+      width={(SIZES.width-50)/2.2}
+      backgroundColor={COLORS.green_button_back}
+      borderColor={COLORS.green_button_back}
+      borderWidth={0}
+      textColor={COLORS.white}
+      extraStyle={{ 
+        elevation: 8, // Pour Android
+        zIndex: slides.length + 90, // Assure que le bouton est au-dessus
+      }}
+    />
+  </View>
+</View>
       
       {/* Indicators */}
       <View style={[styles.paginationContainer, { zIndex: slides.length + 2 }]}>
